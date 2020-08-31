@@ -80,7 +80,16 @@ router.post('/author/:id/update', author_controller.author_update_post);
 router.get('/author/:id', author_controller.author_detail);
 
 // GET request for list of all Authors.
-router.get('/authors', author_controller.author_list);
+router.get('/authors', async (req,res)=>{
+    var result = await author_controller.author_list();
+    var authors = await JSON.parse(JSON.stringify(result))
+    console.log("authiors"+authors);
+    res.status(200).render("author_list.hbs",{
+        layout:"main.hbs",
+        title:"AuthorList Page",
+        data:authors
+    })
+});
 
 /// GENRE ROUTES ///
 
@@ -100,13 +109,38 @@ router.post('/genre/:id/delete', genre_controller.genre_delete_post);
 router.get('/genre/:id/update', genre_controller.genre_update_get);
 
 // POST request to update Genre.
-router.post('/genre/:id/update', genre_controller.genre_update_post);
+router.post('/genre/:id/update',  genre_controller.genre_update_post);
 
 // GET request for one Genre.
-router.get('/genre/:id', genre_controller.genre_detail);
+router.get('/genre/:id', async (req,res)=>{
+    var id = req.params.id
+    var res = await genre_controller.genre_detail(id);
+    var genre = await JSON.parse(JSON.stringify(res));
+   var result =  await book_controller.book_detail(id);
+   var book = await JSON.parse(JSON.stringify(result));
+   console.log(genre);
+   console.log(book);
+   res.status(200).render("genre_details.hbs",{
+    layout:"main.hbs",
+    title:"genre Details Page",
+    data: book,
+    genre:genre
+})
+
+
+});
 
 // GET request for list of all Genre.
-router.get('/genres', genre_controller.genre_list);
+router.get('/genres', async (req,res)=>{
+    var result = await genre_controller.genre_list ();
+    var genres = await JSON.parse(JSON.stringify(result))
+    console.log("genres"+genres);
+    res.status(200).render("genre_list.hbs",{
+        layout:"main.hbs",
+        title:"Genre Details",
+        data:genres
+    })
+});
 
 /// BOOKINSTANCE ROUTES ///
 

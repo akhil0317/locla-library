@@ -38,8 +38,9 @@ exports.book_list =async function(req, res) {
 };
 
 // Display detail page for a specific book.
-exports.book_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: Book detail: ' + req.params.id);
+exports.book_detail = async  function(id) {
+   var res = await   Book.find({ 'genre': id })
+   return res;
 };
 
 // Display book create form on GET.

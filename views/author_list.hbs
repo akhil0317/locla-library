@@ -1,0 +1,16 @@
+<div class='col-sm-10'>
+             <span style = "visibility:hidden;">{{data}}</span> 
+            <h1 >List of Author Details</h1>
+            <ul>
+                {{#each data}}
+                {{# if this.date_of_death}}
+                <li><b>AuthorName:</b><a href = {{this.url}}>{{this.name}}</a> <b>Date_Of_Birth</b>:{{this.date_of_birth}} <span>-</span>{{this.date_of_death}}</li>
+                {{else}}
+                 <li><b>AuthorName:</b><a href = {{this.url}}>{{this.name}}</a> <b>Date_Of_Birth</b>:{{this.date_of_birth}} <span>-</span>present</li>
+                {{/if}}
+                {{/each}}
+            </ul>
+            </div>
+        </div>
+    </div>
+</body>
