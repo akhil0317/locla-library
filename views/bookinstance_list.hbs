@@ -1,0 +1,36 @@
+<div class='col-sm-10'>
+             <span style = "">{{data}}</span> 
+            <h1 >Book Instance List</h1>
+            <ul>
+                {{#each data}}
+                <li>TITLE: <a href = {{this.url}}>{{this.book.title}}</a> {{this.imprint}}</li>
+                {{#equalityCheck this.status=='Available'}}
+                    <span class="text-success">{{this.status}}</span>
+{{else if   this.status=='Maintenance'}}
+  <span class="text-danger">{{this.status}}</span>
+{{else}}
+    <span class="text-warning">{{this.status}}</span>
+    {{#equalityCheck {{this.status!="Available"}}
+<span>due: {{this.due_back}}</span>
+
+    {{/equalityCheck}}
+{{/equalityCheck}}
+                {{/each}}
+            </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+
+    Handlebars.registerHelper("equalityCheck", function(a,b,options) {
+    if(a ===b) {
+        return options.fn(this);
+      }
+      return options.inverse(this);
+    
+  });
+
+
+</script>

@@ -1,0 +1,12 @@
+<div class='col-sm-10'>
+             <span style = "visibility:hidden;">{{data}}</span> 
+            <h1 >Book List</h1>
+            <ul>
+                {{#each data}}
+                <li><b>BookName:</b><a href = {{this.url}}>{{this.title}}</a> <b>Author</b>:{{this.author.name}}</li>
+                {{/each}}
+            </ul>
+            </div>
+        </div>
+    </div>
+</body>
