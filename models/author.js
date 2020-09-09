@@ -30,7 +30,7 @@ AuthorSchema
   return fullname;
 });
 
-// Virtual for author's lifespan
+// //Virtual for author's lifespan
 // AuthorSchema
 // .virtual('lifespan')
 // .get(function () {

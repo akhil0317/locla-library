@@ -1,0 +1,19 @@
+<div class='col-sm-10'>
+             <span style = "visibility:hidden;">{{data}}</span> 
+            <h1 >Author: {{author.name}}</h1>
+            <p>{{author.date_of_birth}}-{{author.date_of_death}}</p>
+            <h4>BOOKS</h4>
+            <ul>
+                {{#each author_books}}
+                <li><b>BookName:</b><a href = {{this.url}}>{{this.title}}</a></li>
+                <p>{{this.summary}}</p>
+                {{else}}
+                <p>This author has no books!!</p>
+                {{/each}}
+            </ul>
+            <hr>
+            <a href = {{author.url}}>Delete Author</a>
+            </div>
+        </div>
+    </div>
+</body>

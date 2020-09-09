@@ -25,13 +25,7 @@ const hbs = expressHbs.create({
     }
   });
 
-// Handlebars.registerHelper("equalityCheck", function(a,b,options) {
-//     if(a ===b) {
-//         return options.fn(this);
-//       }
-//       return options.inverse(this);
-    
-//   });
+
 
   app.engine(".hbs", hbs.engine);
   app.set("view engine", ".hbs");
@@ -55,7 +49,7 @@ app.get("/",async (req,res)=>{
 
 app.use("/catalog",router);
 
-var PORT = process.env.PORT ||4882;
+var PORT = process.env.PORT ||8089;
 app.listen(PORT,()=>{
     console.log("server running");
 })

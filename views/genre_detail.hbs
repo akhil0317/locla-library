@@ -1,10 +1,18 @@
 <div class='col-sm-10'>
              <span style = "visibility:hidden;">{{data}}</span> 
-            <h1 >{{}}</h1>
+            <h1 >{{genre.name}}</h1>
+            <h4>BOOKS</h4>
             <ul>
+              
                 {{#each data}}
-                <li><b>BookName:</b><a href = {{this.url}}>{{this.title}}</a> <b>Author</b>:{{this.author.name}}</li>
+                <li><a href = {{this.url}}>{{this.title}}</a></li>
+                <li>{{this.summary}}</li>
+                   {{else}}
+                <p>This Genre has no books</p>
                 {{/each}}
+                 
+             
+              
             </ul>
             </div>
         </div>

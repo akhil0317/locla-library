@@ -42,7 +42,83 @@ router.get('/book/:id/update', book_controller.book_update_get);
 router.post('/book/:id/update', book_controller.book_update_post);
 
 // GET request for one Book.
-router.get('/book/:id', book_controller.book_detail);
+router.get('/book/:id', async (req,res)=>{
+    var id  = req.params.id;
+    console.log(id);
+    try{
+    var result = await book_controller.book_detailsByBookID(id);
+    }
+    catch(err)
+    {
+    console.log(err);
+    }
+    try{
+        if(result!=null)
+    var book = await JSON.parse(JSON.stringify(result));
+    else
+    var book = {};
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
+    try{
+    var result1 = await book_instance_controller.bookinstance_detail(id);
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
+    try{
+        if(result1!=null)
+        {
+    var book_Instances = await JSON.parse(JSON.stringify(result1));
+
+        }
+    else
+    var book_Instances = {};
+   
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
+    console.log("---------------------------------");
+    console.log(book);
+    console.log("-------------------------------------");
+        if(book_Instances.length>0)
+        {
+    for(var i=0;i<book_Instances.length;i++)
+   {
+       if(book_Instances[i].status=='Available')
+       {
+           book_Instances[i].Available = true;
+           book_Instances[i].Maintenance = false;
+           book_Instances[i]. Loaned = false;
+       }
+       else if(book_Instances[i].status =='Maintenance')
+       {
+        book_Instances[i].Available =false;
+        book_Instances[i].Maintenance = true;
+        book_Instances[i]. Loaned = false;
+       }
+       else
+       {
+        book_Instances[i].Available =false;
+        book_Instances[i].Maintenance = false;
+        book_Instances[i]. Loaned = true;
+       }
+   }
+}
+
+    res.status(200).render("book_detail.hbs",{
+        layout: "main.hbs",
+    data: book,
+    bookInstance: book_Instances,
+    title: "Book Details Page"
+    })
+
+});
 
 // GET request for list of all Book items.
 router.get('/books', async (req,res)=>{
@@ -77,12 +153,53 @@ router.get('/author/:id/update', author_controller.author_update_get);
 router.post('/author/:id/update', author_controller.author_update_post);
 
 // GET request for one Author.
-router.get('/author/:id', author_controller.author_detail);
+router.get('/author/:id', async (req,res)=>{
+    var id = req.params.id;
+    try{
+    var result = await author_controller.author_detail(id);
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
+    try{
+    var authorDetails = await JSON.parse(JSON.stringify(result));
+    authorDetails.url = authorDetails.url+ "/delete";
+   
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
+        try{
+    var result1 = await book_controller.book_detailsByAuthorId(id) 
+        }
+        catch(err)
+        {
+        console.log(err);
+        }
+            try{
+       var bookDetails=  await JSON.parse(JSON.stringify(result1));
+            }
+            catch(err)
+            {
+                console.log(err)
+            }
+            res.status(200).render("author_detail.hbs",{
+                layout:"main.hbs",
+        title:"AuthorDetails Page",
+        author: authorDetails,
+        author_books: bookDetails
+            })
+
+});
 
 // GET request for list of all Authors.
 router.get('/authors', async (req,res)=>{
+
     var result = await author_controller.author_list();
     var authors = await JSON.parse(JSON.stringify(result))
+        
     console.log("authiors"+authors);
     res.status(200).render("author_list.hbs",{
         layout:"main.hbs",
@@ -114,13 +231,51 @@ router.post('/genre/:id/update',  genre_controller.genre_update_post);
 // GET request for one Genre.
 router.get('/genre/:id', async (req,res)=>{
     var id = req.params.id
-    var res = await genre_controller.genre_detail(id);
-    var genre = await JSON.parse(JSON.stringify(res));
+    console.log(id);
+    try{
+    var result1 = await genre_controller.genre_detail(id);
+    }
+    catch(error)
+    {
+    console.log(error);
+    }
+    try
+    {
+    var genre = await JSON.parse(JSON.stringify(result1));
+    }
+    catch(error)
+    {
+        console.log(error)
+    }
+    try{
    var result =  await book_controller.book_detail(id);
-   var book = await JSON.parse(JSON.stringify(result));
-   console.log(genre);
-   console.log(book);
-   res.status(200).render("genre_details.hbs",{
+    }
+    catch(error)
+    {
+        console.log(error)
+    }
+
+try{
+    if(result!=null)
+    {
+    var book = await JSON.parse(JSON.stringify(result));
+    
+    }
+    else
+    {
+    var book = {};
+  
+    }
+
+}
+catch(err)
+{
+    console.log(err);
+}
+   
+        
+
+   res.render("genre_detail.hbs",{
     layout:"main.hbs",
     title:"genre Details Page",
     data: book,
@@ -163,12 +318,84 @@ router.get('/bookinstance/:id/update', book_instance_controller.bookinstance_upd
 router.post('/bookinstance/:id/update', book_instance_controller.bookinstance_update_post);
 
 // GET request for one BookInstance.
-router.get('/bookinstance/:id', book_instance_controller.bookinstance_detail);
+router.get('/bookinstance/:id',async (req,res)=>{
+    var id = req.params.id
+    try{
+    var result = await book_instance_controller.bookinstance_details_byInstanceId(id);
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
+    try{
+        if(result!=null)
+        {
+        var bookInstances = await JSON.parse(JSON.stringify(result));
+
+       
+            if(bookInstances.status=='Available')
+            {
+                bookInstances.Available = true;
+                bookInstances.Maintenance = false;
+                bookInstances. Loaned = false;
+            }
+            else if(bookInstances.status =='Maintenance')
+            {
+             bookInstances.Available =false;
+             bookInstances.Maintenance = true;
+             bookInstances. Loaned = false;
+            }
+            else
+            {
+             bookInstances.Available =false;
+             bookInstances.Maintenance = false;
+             bookInstances. Loaned = true;
+            }
+        
+       
+        }
+
+        else
+        var bookInstances ={};
+        bookInstances.isEmpty = true
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
+    res.status(200).render("bookinstance_detail.hbs",{
+        layout:"main.hbs",
+        title:"bookInstance Details",
+        instanceDetails:bookInstances
+    })
+});
 
 // GET request for list of all BookInstance.
 router.get('/bookinstances', async (req,res)=>{
    const result = await book_instance_controller.bookinstance_list();
    const bookInstances = await JSON.parse(JSON.stringify(result));
+   for(var i=0;i<bookInstances.length;i++)
+   {
+       if(bookInstances[i].status=='Available')
+       {
+           bookInstances[i].Available = true;
+           bookInstances[i].Maintenance = false;
+           bookInstances[i]. Loaned = false;
+       }
+       else if(bookInstances[i].status =='Maintenance')
+       {
+        bookInstances[i].Available =false;
+        bookInstances[i].Maintenance = true;
+        bookInstances[i]. Loaned = false;
+       }
+       else
+       {
+        bookInstances[i].Available =false;
+        bookInstances[i].Maintenance = false;
+        bookInstances[i]. Loaned = true;
+       }
+   }
+   console.log(bookInstances);
    res.status(200).render("bookinstance_list.hbs",{
        layout:"main.hbs",
        title:"bookInstance Page",
