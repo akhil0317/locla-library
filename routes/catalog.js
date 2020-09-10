@@ -297,7 +297,8 @@ router.get('/genres', async (req,res)=>{
     var genres = await JSON.parse(JSON.stringify(result))
     var genres1 = Object.values(genres).map((genere)=>{
        var fullUrl = genere.url+'/delete'
-       return {...genere,fullUrl}
+       var updateUrl = genere.url+'/update'
+       return {...genere,fullUrl,updateUrl}
     })
     console.log("----------------------------");
     console.log("genres"+genres1);

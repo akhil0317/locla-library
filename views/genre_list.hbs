@@ -1,10 +1,11 @@
 <div class='col-sm-10'>
              <span style = "visibility:hidden;">{{data}}</span> 
             <h1 >Genre List</h1>
+            
             <ul>
                 {{#each data}}
-                
-                <li><a href = {{this.url}}>{{this.name}}</a>  <a href = {{this.fullUrl}}>Delete Genre</a></li>
+               
+                <li><a href = {{this.url}}>{{this.name}}</a>  <a href = {{this.fullUrl}}>Delete Genre</a>  <a href = {{this.updateUrl}}>Update Genre</a></li>
                 {{/each}}
             </ul>
             </div>

@@ -1,5 +1,6 @@
 var Genre = require('../models/genre');
 const validator = require('express-validator');
+const { body,validationResult } = require('express-validator/check');
 var Book = require('../models/book');
 // Display list of all Genre.
 exports.genre_list = async function(req, res) {
@@ -45,7 +46,9 @@ exports.genre_create_post = [
   
       // Create a genre object with escaped and trimmed data.
       var genre = new Genre(
-        { name: req.body.name }
+        { 
+          name: req.body.name
+         }
       );
   
   
@@ -108,11 +111,49 @@ exports.genre_delete_post = function(req, res) {
 };
 
 // Display Genre update form on GET.
-exports.genre_update_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: Genre update GET');
+exports.genre_update_get = async function(req, res) {
+  var genreDetails = await Genre.findById(req.params.id);
+  var genres = await Genre.find();
+  var genreDetails1 = JSON.parse(JSON.stringify(genreDetails));
+  var genres1 = JSON.parse(JSON.stringify(genres));
+  res.status(200).render("genreUpdate_form",{
+    title:"Update Genre",
+    genres:genres1,
+    genreDetails:genreDetails1
+  })
 };
 
 // Handle Genre update on POST.
-exports.genre_update_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Genre update POST');
-};
+exports.genre_update_post = [
+  body('genre', 'genre must not be empty.').trim().isLength({ min: 1 }),
+async (req,res,next)=>{
+  const errors = validationResult(req);
+  var genre = new Genre({
+    name:req.body.genre,
+    _id:req.params.id
+  })
+   if(!errors.isEmpty())
+   {
+    var genreDetails = await Genre.findById(req.params.id);
+  var genres = await Genre.find();
+  var genreDetails1 = JSON.parse(JSON.stringify(genreDetails));
+  var genres1 = JSON.parse(JSON.stringify(genres));
+  res.status(200).render("genreUpdate_form",{
+    title:"Update Genre",
+    genres:genres1,
+    genreDetails:genreDetails1,
+    errors: errors.array()
+  }) 
+   }
+   else{
+     Genre.findByIdAndUpdate(req.params.id,genre,{},function(err,genre){
+          if(err)
+          return next(err)
+          else
+          res.redirect(genre.url)
+     })
+   }
+
+}
+ 
+]
