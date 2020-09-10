@@ -1,0 +1,25 @@
+<div class='col-sm-10'>
+             
+            <h1 >Genre :{{genre.name}}</h1>
+            
+            {{#if books.length}}
+            <p><strong>Delete the following books  before attempting to delete this Genre.</strong></p>
+            <h4>Books</h4>
+            {{#each books}}
+            <p><a href = {{this.url}}>{{this.title}}</a></p>
+            <p>{{this.summary}}</p>
+            <hr>
+            {{/each}}
+            {{else}}
+            <p>Do you want to really delete this Genre</p>
+            <form method ='POST' action = ''>
+                <div class='form-group'>
+                    <input id = 'genreid' class='form-control' type = 'hidden' name ='genreid' required ='true' value ={{genre._id}}>
+                    <button class='btn-primary' type='submit'>Delete</button>
+                </div>
+            </form>
+            {{/if}}
+           
+            </div>
+        </div>
+    </div>

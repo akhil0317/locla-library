@@ -8,7 +8,7 @@ const { sanitizeBody } = require('express-validator/filter');
 exports.author_list = async function(req, res) {
     var auhors = {};
     var result  = await Author.find({})
-    console.log(result);
+    
     return result;
     
 };
@@ -84,8 +84,7 @@ exports.author_delete_get = async function(req, res) {
     var authors_books1 = await Book.find({ 'author': req.params.id });
 var author = await JSON.parse(JSON.stringify(author1))
 var authors_books = await JSON.parse(JSON.stringify(authors_books1))
-    console.log(author);
-    console.log(authors_books);
+    
 
 
    
@@ -94,12 +93,16 @@ var authors_books = await JSON.parse(JSON.stringify(authors_books1))
 
 // Handle Author delete on POST.
 exports.author_delete_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Author delete POST');
+    Author.findByIdAndRemove(req.body.authorid, function deleteAuthor(err) {
+        if (err) { return next(err); }
+        // Success - go to author list
+        res.redirect('/catalog/authors')
+    })
 };
 
 // Display Author update form on GET.
 exports.author_update_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: Author update GET');
+   
 };
 
 // Handle Author update on POST.

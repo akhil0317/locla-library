@@ -11,7 +11,7 @@ var {index} = require("./controllers/bookController.js")
 //  var {getAllBooks} = require("./routes/catalog")
 const ifEquality = require("./views/helpers/ifEquality");
 
-console.log(process.env);
+
 
 var app = express();
 

@@ -3,7 +3,8 @@
             <h1 >Book List</h1>
             <ul>
                 {{#each data}}
-                <li><b>BookName:</b><a href = {{this.url}}>{{this.title}}</a> <b>Author</b>:{{this.author.name}}</li>
+                
+                <li><b>BookName:</b><a href = {{this.url}}>{{this.title}}</a> <b>Author</b>:{{this.author.name}}  <a href ={{this.fullUrl}}>Delete Book</a>  <a href = {{this.updateUrl}}>UpdateBook</a></li>
                 {{/each}}
             </ul>
             </div>

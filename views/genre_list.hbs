@@ -3,7 +3,8 @@
             <h1 >Genre List</h1>
             <ul>
                 {{#each data}}
-                <li><a href = {{this.url}}>{{this.name}}</a> </li>
+                
+                <li><a href = {{this.url}}>{{this.name}}</a>  <a href = {{this.fullUrl}}>Delete Genre</a></li>
                 {{/each}}
             </ul>
             </div>

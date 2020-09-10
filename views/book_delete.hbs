@@ -1,0 +1,27 @@
+<div class='col-sm-10'>
+             
+            <h1 >Book :{{book.title}}</h1>
+            <p>{{book.genre.name}}</p>
+            <p>{{book.summary}}</p>
+            {{#if book_instance.length}}
+            <p><strong>Delete the following book instances before attempting to delete this book.</strong></p>
+            <h4>Book Instances</h4>
+            {{#each book_instance}}
+            <a href = {{this.url}}>{{this.imprint}}</a>
+            <p>{{this.status}}</p>
+            <p>{{this.due_back}}</p>
+            <hr>
+            {{/each}}
+            {{else}}
+            <p>Do you want to really delete this book</p>
+            <form method ='POST' action = ''>
+                <div class='form-group'>
+                    <input id = 'bookid' class='form-control' type = 'hidden' name ='bookid' required ='true' value ={{book._id}}>
+                    <button class='btn-primary' type='submit'>Delete</button>
+                </div>
+            </form>
+            {{/if}}
+           
+            </div>
+        </div>
+    </div>

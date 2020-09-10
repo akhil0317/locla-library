@@ -5,12 +5,12 @@
                 {{#each data}}
                
                 {{#if this.Available}}
-                   <li>TITLE: <a href = {{this.url}}>{{this.book.title}}</a> {{this.imprint}} <span class="text-success">{{this.status}}</span></li>  
+                   <li>TITLE: <a href = {{this.url}}>{{this.book.title}}</a> {{this.imprint}} <span class="text-success">{{this.status}}</span>  <a href = {{this.fullUrl}}>Delete BookInstance</a>  </li>  
 {{else if this.Maintenance}}
-   <li>TITLE: <a href = {{this.url}}>{{this.book.title}}</a> {{this.imprint}} <span class="text-danger">{{this.status}}</span> <span>due: {{this.due_back_formatted}}</span></li>
+   <li>TITLE: <a href = {{this.url}}>{{this.book.title}}</a> {{this.imprint}} <span class="text-danger">{{this.status}}</span> <span>due: {{this.due_back_formatted}}</span>  <a href = {{this.fullUrl}}>Delete BookInstance</a> </li>
  
 {{else}}
-     <li>TITLE: <a href = {{this.url}}>{{this.book.title}}</a> {{this.imprint}} <span class="text-warning">{{this.status}}</span><span>due: {{this.due_back_formatted}}</span></li>
+     <li>TITLE: <a href = {{this.url}}>{{this.book.title}}</a> {{this.imprint}} <span class="text-warning">{{this.status}}</span><span>due: {{this.due_back_formatted}}</span>   <a href = {{this.fullUrl}}>Delete BookInstance</a> </li>
     
     
 {{/if}}

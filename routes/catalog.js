@@ -124,11 +124,17 @@ router.get('/book/:id', async (req,res)=>{
 router.get('/books', async (req,res)=>{
    var books =  await  book_controller.book_list();
    var bookList = JSON.parse(JSON.stringify(books));
+    
+   var bookListArray = Object.values(bookList).map((books)=>{
+    fullUrl = books.url+"/delete"
+    updateUrl = books.url+"/update"
+      return{...books, fullUrl,updateUrl}
+   })
+   
   
-   console.log(typeof(bookList));
       res.status(200).render("bookList.hbs",{
     layout: "main.hbs",
-    data: bookList,
+    data: bookListArray,
     title: "BookListPage"
    })
 })
@@ -289,11 +295,17 @@ catch(err)
 router.get('/genres', async (req,res)=>{
     var result = await genre_controller.genre_list ();
     var genres = await JSON.parse(JSON.stringify(result))
-    console.log("genres"+genres);
+    var genres1 = Object.values(genres).map((genere)=>{
+       var fullUrl = genere.url+'/delete'
+       return {...genere,fullUrl}
+    })
+    console.log("----------------------------");
+    console.log("genres"+genres1);
+    console.log("----------------------------");
     res.status(200).render("genre_list.hbs",{
         layout:"main.hbs",
         title:"Genre Details",
-        data:genres
+        data:genres1
     })
 });
 
@@ -376,26 +388,32 @@ router.get('/bookinstances', async (req,res)=>{
    const bookInstances = await JSON.parse(JSON.stringify(result));
    for(var i=0;i<bookInstances.length;i++)
    {
+       var fullUrl = bookInstances[i].url+"/delete"
        if(bookInstances[i].status=='Available')
        {
            bookInstances[i].Available = true;
            bookInstances[i].Maintenance = false;
            bookInstances[i]. Loaned = false;
+            bookInstances[i].fullUrl = fullUrl
        }
        else if(bookInstances[i].status =='Maintenance')
        {
         bookInstances[i].Available =false;
         bookInstances[i].Maintenance = true;
         bookInstances[i]. Loaned = false;
+        bookInstances[i].fullUrl = fullUrl
        }
        else
        {
         bookInstances[i].Available =false;
         bookInstances[i].Maintenance = false;
         bookInstances[i]. Loaned = true;
+        bookInstances[i].fullUrl = fullUrl
        }
    }
+   console.log("-------------------------------")
    console.log(bookInstances);
+   console.log("------------------------------");
    res.status(200).render("bookinstance_list.hbs",{
        layout:"main.hbs",
        title:"bookInstance Page",
