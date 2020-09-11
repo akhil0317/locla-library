@@ -4,9 +4,9 @@
             <ul>
                 {{#each data}}
                 {{# if this.date_of_death}}
-                <li><b>AuthorName:</b><a href = {{this.url}}>{{this.name}}</a> <b>Date_Of_Birth</b>:{{this.date_of_birth}} <span>-</span>{{this.date_of_death}}</li>
+                <li><b>AuthorName:</b><a href = {{this.url}}>{{this.name}}</a> <b>Date_Of_Birth</b>:{{this.date_of_birth_formatted}} <span>-</span>{{this.date_of_death_formatted}}</li>
                 {{else}}
-                 <li><b>AuthorName:</b><a href = {{this.url}}>{{this.name}}</a> <b>Date_Of_Birth</b>:{{this.date_of_birth}} <span>-</span>present</li>
+                 <li><b>AuthorName:</b><a href = {{this.url}}>{{this.name}}</a> <b>Date_Of_Birth</b>:{{this.date_of_birth_formatted}} <span>-</span>present</li>
                 {{/if}}
                 {{/each}}
             </ul>

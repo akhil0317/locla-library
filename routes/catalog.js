@@ -44,7 +44,7 @@ router.post('/book/:id/update', book_controller.book_update_post);
 // GET request for one Book.
 router.get('/book/:id', async (req,res)=>{
     var id  = req.params.id;
-    console.log(id);
+    
     try{
     var result = await book_controller.book_detailsByBookID(id);
     }
@@ -83,9 +83,7 @@ router.get('/book/:id', async (req,res)=>{
     {
         console.log(err);
     }
-    console.log("---------------------------------");
-    console.log(book);
-    console.log("-------------------------------------");
+   
         if(book_Instances.length>0)
         {
     for(var i=0;i<book_Instances.length;i++)
@@ -170,7 +168,8 @@ router.get('/author/:id', async (req,res)=>{
     }
     try{
     var authorDetails = await JSON.parse(JSON.stringify(result));
-    authorDetails.url = authorDetails.url+ "/delete";
+    authorDetails.fullUrl = authorDetails.url+ "/delete";
+    authorDetails.updateUrl = authorDetails.url+"/update"
    
     }
     catch(err)
@@ -206,7 +205,7 @@ router.get('/authors', async (req,res)=>{
     var result = await author_controller.author_list();
     var authors = await JSON.parse(JSON.stringify(result))
         
-    console.log("authiors"+authors);
+    
     res.status(200).render("author_list.hbs",{
         layout:"main.hbs",
         title:"AuthorList Page",
@@ -237,7 +236,7 @@ router.post('/genre/:id/update',  genre_controller.genre_update_post);
 // GET request for one Genre.
 router.get('/genre/:id', async (req,res)=>{
     var id = req.params.id
-    console.log(id);
+    
     try{
     var result1 = await genre_controller.genre_detail(id);
     }
@@ -300,9 +299,7 @@ router.get('/genres', async (req,res)=>{
        var updateUrl = genere.url+'/update'
        return {...genere,fullUrl,updateUrl}
     })
-    console.log("----------------------------");
-    console.log("genres"+genres1);
-    console.log("----------------------------");
+    
     res.status(200).render("genre_list.hbs",{
         layout:"main.hbs",
         title:"Genre Details",
@@ -390,12 +387,14 @@ router.get('/bookinstances', async (req,res)=>{
    for(var i=0;i<bookInstances.length;i++)
    {
        var fullUrl = bookInstances[i].url+"/delete"
+       var updateUrl = bookInstances[i].url+"/update"
        if(bookInstances[i].status=='Available')
        {
            bookInstances[i].Available = true;
            bookInstances[i].Maintenance = false;
            bookInstances[i]. Loaned = false;
             bookInstances[i].fullUrl = fullUrl
+            bookInstances[i].updateUrl = updateUrl
        }
        else if(bookInstances[i].status =='Maintenance')
        {
@@ -403,6 +402,7 @@ router.get('/bookinstances', async (req,res)=>{
         bookInstances[i].Maintenance = true;
         bookInstances[i]. Loaned = false;
         bookInstances[i].fullUrl = fullUrl
+        bookInstances[i].updateUrl = updateUrl
        }
        else
        {
@@ -410,11 +410,10 @@ router.get('/bookinstances', async (req,res)=>{
         bookInstances[i].Maintenance = false;
         bookInstances[i]. Loaned = true;
         bookInstances[i].fullUrl = fullUrl
+        bookInstances[i].updateUrl = updateUrl
        }
    }
-   console.log("-------------------------------")
-   console.log(bookInstances);
-   console.log("------------------------------");
+
    res.status(200).render("bookinstance_list.hbs",{
        layout:"main.hbs",
        title:"bookInstance Page",

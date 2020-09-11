@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var moment = require('moment');
 var Schema = mongoose.Schema;
 
+
 var BookInstanceSchema = new Schema(
   {
     book: { type: Schema.Types.ObjectId, ref: 'Book', required: true }, //reference to the associated book

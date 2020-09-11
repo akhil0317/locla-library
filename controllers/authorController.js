@@ -101,11 +101,65 @@ exports.author_delete_post = function(req, res) {
 };
 
 // Display Author update form on GET.
-exports.author_update_get = function(req, res) {
+exports.author_update_get = async function(req, res) {
+    var author = await Author.findById(req.params.id);
+    var author1 = JSON.parse(JSON.stringify(author));
+    res.status(200).render("author_update_form",{
+        title:"Update Author",
+        author: author1
+    })
    
 };
 
 // Handle Author update on POST.
-exports.author_update_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Author update POST');
-};
+exports.author_update_post = [
+   
+   
+    // Validate fields.
+    body('firstName').isLength({ min: 1 }).trim().withMessage('First name must be specified.')
+        .isAlphanumeric().withMessage('First name has non-alphanumeric characters.'),
+    body('lastName').isLength({ min: 1 }).trim().withMessage('Family name must be specified.')
+        .isAlphanumeric().withMessage('Family name has non-alphanumeric characters.'),
+    body('birthDate', 'Invalid date of birth').optional({ checkFalsy: true }).isISO8601(),
+    body('dateOfDeath', 'Invalid date of death').optional({ checkFalsy: true }).isISO8601(),
+
+    // Sanitize fields.
+    sanitizeBody('firstName').escape(),
+    sanitizeBody('lastname').escape(),
+    sanitizeBody('birthDate').toDate(),
+    sanitizeBody('dateOfDeath').toDate(),
+
+    // Process request after validation and sanitization.
+    async (req, res, next) => {
+
+        // Extract the validation errors from a request.
+        const errors = validationResult(req);
+
+        // Create a Book object with escaped/trimmed data and old id.
+        
+            var author = new Author(
+                { first_name:req.body.firstName,
+                  family_name:req.body.lastName,
+                  date_of_birth: req.body.birthDate,
+                  date_of_death: (JSON.stringify(req.body.dateOfDeath).length) ? 'present' : req.body.dateOfDeath,
+                  _id:req.params.id //This is required, or a new ID will be assigned!
+                 });
+            
+     
+
+        if (!errors.isEmpty()) {
+            var author1 = await Author.findById(req.params.id)
+            
+                res.render('author_update_form', { title: 'Update Book',author:author1 ,  errors: errors.array() });
+           
+        }
+        else {
+            // Data from form is valid. Update the record.
+            Author.findByIdAndUpdate(req.params.id, author, {}, function (err,theauthor) {
+                if (err) { return next(err); }
+                   // Successful - redirect to book detail page.
+                   res.redirect(theauthor.url);
+                });
+        }
+    }
+];
