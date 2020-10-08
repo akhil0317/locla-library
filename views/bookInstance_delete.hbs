@@ -1,10 +1,10 @@
-<div class='col-sm-10'>
+<div class='col-sm-10'style = "background-color: #dfe6e3;">
              
-            <h1 >Imprint :<a href = {{bookInstance.url}}>{{bookInstance.imprint}}</a></h1>
+         <strong>IMPRINT:</strong><h1 class="display-4"><a href = {{bookInstance.url}}>{{bookInstance.imprint}}</a></h1>
            
-            <p><b>status</b>: {{bookInstance.status}}</p>
+          <strong>STATUS:</b></strong>  <p class = "lead"> {{bookInstance.status}}</p>
            
-            <p>Do you want to really delete this bookInstance</p>
+            <p class = "lead text-danger">Do you want to really delete this bookInstance</p>
             <form method ='POST' action = ''>
                 <div class='form-group'>
                     <input id = 'bookInstanceid' class='form-control' type = 'hidden' name ='bookInstanceid' required ='true' value ={{bookInstance._id}}>

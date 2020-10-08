@@ -1,21 +1,19 @@
-<div class='col-sm-10'>
-             <span style = "visibility:hidden;">{{data}}</span> 
-            <h1 >ID: {{instanceDetails._id}}</h1>
-            <p>TITLE : <a href = {{instanceDetails.book.url}}>{{instanceDetails.book.title}}</a></p>
-            <p>IMPRINT: {{instanceDetails.imprint}}</p>
-            {{#if instanceDetails.Available}}
-            <span class="text-success">status: {{instanceDetails.status}}</span>
+<div style = "background-color: #dfe6e3">
+  <div class="container">
+    <h1 class="display-4">ID: {{instanceDetails._id}}</h1>
+   <strong>TITLE</strong> :  <p class="lead"><a href = {{instanceDetails.book.url}}>{{instanceDetails.book.title}}</a></p>
+    <strong>IMPRINT</strong>:    <p class = "lead"> {{instanceDetails.imprint}}</p>
+     {{#if instanceDetails.Available}}
+           <strong>STATUS:</strong>  <p class="text-success">{{instanceDetails.status}}</p>
             {{else if instanceDetails.Maintenance}}
-             <span class="text-danger">status: {{instanceDetails.status}}<br><span>DUE : {{instanceDetails.due_back_formatted}}</span></span>
+           <strong>STATUS:</strong>   <span class="text-danger"> {{instanceDetails.status}}<br><span class = "lead">DUE : {{instanceDetails.due_back_formatted}}</span></span>
               {{else if instanceDetails.Loaned}}
-             <span class="text-warning">status: {{instanceDetails.status}}<br><span>DUE : {{instanceDetails.due_back_formatted}}</span></span>
+            <strong>STATUS:</strong>  <span class="text-warning"> {{instanceDetails.status}}<br><span class = "lead">DUE : {{instanceDetails.due_back_formatted}}</span></span>
              {{else}}
-             <p>Book Copy not available</p>
+             <p class = "lead">Book Copy not available</p>
             
 
 
             {{/if}}
-            </div>
-        </div>
-    </div>
-</body>
+  </div>
+</div>

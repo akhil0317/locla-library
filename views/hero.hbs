@@ -1,15 +1,11 @@
- <div class='col-sm-10'>
-            <span style = "visibility: hidden;">{{data}}</span>
-            <h1 >Welcome to Local Library</h1>
-            <h4>Below are the complete detail History of our library books!!</h4>
-            <ul>
-                <li><b>Books</b>: {{data.book_count}}</li>
-                <li><b>Copies</b>: {{data.book_instance_count}}</li>
-                <li><b>Copies Available</b>: {{data.book_instance_available_count}}</li>
-                <li><b>Authors</b>: {{data.author_count}}</li>
-                <li><b>Geners</b>: {{data.genre_count}}</li>
-            </ul>
-            </div>
-        </div>
-    </div>
-</body>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Welcome to Local Library</h1>
+    <p class="lead">Below are the complete detail History of our library books!!</p>
+    <h4>Books <span class="badge badge-primary">{{data.book_count}}</span></h4>
+    <h4> Copies <span class="badge badge-primary">{{data.book_instance_count}}</span></h4>
+    <h4>Copies Available<span class="badge badge-primary">{{data.book_instance_available_count}}</span></h4>
+    <h4>Authors <span class="badge badge-primary"> {{data.author_count}}</span></h4>
+    <h4>Geners <span class="badge badge-primary">{{data.genre_count}}</span></h4>
+  </div>
+</div>

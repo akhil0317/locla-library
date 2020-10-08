@@ -1,14 +1,19 @@
-<div class='col-sm-10'>
+<div class='col-sm-10' style = "background-color:#dfe6e3;">
              <span style = "visibility:hidden;">{{data}}</span> 
-            <h1 >TITLE: {{data.title}}</h1>
-            <p><strong>AUTHOR</strong>: <a href = {{data.author.url}}>{{data.author.name}}</a></p>
+            <h5 ><span class = "text-dark">TITLE: </span> <span class = "text-dark">{{data.title}}</span></h5>
+           <hr/>
+            <p><strong>AUTHOR</strong>: <a  href = {{data.author.url}}>{{data.author.name}}</a></p>
+           
+            <hr/>
             <p><strong>SUMMARY</strong>: {{data.summary}}</p>
-            <p><strong>ISBN</strong>: {{data.isbn}}</p>
+            <hr/>
+            <p><strong class = "text-dark">ISBN</strong>: {{data.isbn}}</p>
+            <hr/>
             {{#each data.genre}}
-            <p><strong>GENRE</strong>: <a href = {{this.url}}>{{this.name}}</a></p>
+            <p><strong class = "text-dark">GENRE</strong>: <a href = {{this.url}}>{{this.name}}</a></p>
             {{/each}}
               <div style = 'margin-left:20px;margin-top:20px;')
-            <h4>COPIES</h4>
+            <h4><strong>COPIES</strong></h4>
             {{#each bookInstance}}
                
                 {{#if this.Available}}
